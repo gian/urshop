@@ -1,0 +1,114 @@
+body {
+	font:13px arial,helvetica,clean,sans-serif;
+	background-color: #EEEEFF;
+}
+
+.Shop_display_container  {
+	width: 650px;
+	margin-left: auto ;
+	margin-right: auto ;
+	margin-top: 35px;
+	background-color: white;
+	padding: 4px;
+}
+
+ h1 {
+	text-align: center;
+	text-transform: uppercase;
+	border: 2px double gray;
+}
+
+ .Product_display_stock {
+	float: right;
+	position: relative;
+	top: -10px;
+	right: 0px;
+	background-color: #abcdef;
+	font-weight: bold;
+	spacing: 0px;
+	padding: 8px;
+	margin: 0px;
+	margin-top: 5px;
+}
+
+ .Product_display_title  {
+	background-color: #ABCDEF;
+	padding: 4px;
+	margin: 4px;
+}
+
+ .Product_display_attr {
+ 	position: relative;
+	left: 25px;
+}
+
+ .Product_display_desc {
+	font-family: times,serif;
+	background-color: white;
+}
+
+ .Product_display_price {
+	padding: 6px;
+	font-weight: bold;
+	font-size: 13px;
+}
+
+ .Shop_buy_button {
+	float: right;
+}
+
+ .Urblog_blogentryauthor {
+	float: left;
+}
+
+.Urblog_commentform {
+
+}
+
+.Urblog_commentbutton {
+	color:black; 
+	font: bold 9px arial,helvetica,clean,sans-serif;	
+	background-color:white; 
+	border:1px solid; 
+	border-color: #696 #363 #363 #696; 
+} 
+
+.Urblog_accountlinks {
+	top: 5px;
+	right: 10px;
+	position: absolute;
+	float: right;
+}
+
+.Urblog_bodyedit {
+	width: 630px;
+	height: 250px;
+}
+
+.Urblog_commentbox {
+	width: 430px;
+	height: 150px;
+}
+
+.Editor_editordefault {
+	width: 330px;
+}
+
+.Urblog_loginbox {
+	position: absolute;
+	float: right;
+	right: 10px;
+	top: 35px;
+	padding: 24px;
+	background-color: white;
+	border-color: black;
+	border-width: 1px;
+	border-style: solid;
+	font-size: 10px;
+}
+
+.Urblog_loginbox input {
+	 font-family: 9px  Arial, Helvetica, clean, sans-serif;
+	 width: 100px;
+}
+

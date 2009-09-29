@@ -1,0 +1,9 @@
+allow url http://www.expdev.net/urshop/urshop.css
+database dbname=urshop
+sql urshop.sql
+
+$/option
+$/list
+$/string
+product
+shop
