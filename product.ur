@@ -65,13 +65,17 @@ functor Make(M : sig
 
                  val cols : colsMeta cols
 	
-				 val cartAdd : int -> transaction page
+				 cookie cartCookie : list int
+
+				 val formatting : {Head : string -> page, BodyStart : string -> xbody, BodyEnd : unit -> xbody}
 
 				 val display_container : css_class
              end) = struct
 
     val tab = M.tab
 	val display_container = M.display_container
+	val cartCookie = M.cartCookie
+	val formatting = M.formatting
 
 	fun displayProds () =
 	 rows <- queryX (SELECT * FROM tab AS T)
@@ -94,7 +98,25 @@ functor Make(M : sig
                                                {col.Show v}
                                              </xml>)
                       [M.cols] M.fl (fs.T -- #Id) M.cols}
- 	    <a link={M.cartAdd id}>Add to Cart</a></div></xml>);
-	 return <xml>{rows}</xml>
+ 	    <a link={cartAdd id}>Add to Cart</a></div></xml>);
+	return <xml>{rows}</xml>
+
+	(* return <xml>{displayProd i}</xml>) items); *)
+
+	and cart () = 
+		c <- getCookie cartCookie;
+		(case c of None => return <xml><body>Your cart is empty</body></xml>
+	              | Some items => dp <- displayProd 1;
+				  	return <xml><body>
+						{dp}
+						</body>
+					</xml>	
+		)
+
+	and cartAdd (id : int) = 
+		c <- getCookie cartCookie;
+		(case c of
+			None => setCookie cartCookie (Cons (id, Nil)); cart ()
+		  | Some x => if (List.exists (fn y => y = id) x) then cart() else setCookie cartCookie (Cons (id, x)); cart ())
 
 end

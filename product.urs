@@ -18,10 +18,16 @@ functor Make(M : sig
 
                  val cols : colsMeta cols
 
-				 val cartAdd : int -> transaction page
+				 cookie cartCookie : list int
+
+				 val formatting : {Head : string -> page, BodyStart : string -> xbody, BodyEnd : unit -> xbody}
 
 				 val display_container : css_class
              end) : sig
     val displayProd : int -> transaction xbody 
     val displayProds : unit -> transaction page
+    val cart : unit -> transaction page
+	val cartAdd : int -> transaction page
+
+
 end

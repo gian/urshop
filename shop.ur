@@ -51,26 +51,14 @@ style buybutton
 
 cookie cartCookie : list int
 
-fun mkHead title = <xml><head><title>{[title]}</title>
+val formatting = {Head =
+					fn title => <xml><head><title>{[title]}</title>
 					 <link rel="stylesheet" type="text/css" href="http://www.expdev.net/urshop/urshop.css"/>
 					</head></xml>
-
-fun cart () = 
-	c <- getCookie cartCookie;
-	r <- (case c of None => return <xml>{mkHead "Shopping Cart"}<body>Your cart is empty</body></xml>
-	              | Some items => 
-				  	return <xml>{mkHead "Shopping Cart"}<body>
-						<h1>Shopping Cart</h1>
-						<ul>{List.mapX (fn i => <xml><li>{[i]}</li></xml>) items}</ul>
-					</body></xml>
-		 );
-	return r
-
-fun buy (id : int) = 
-	c <- getCookie cartCookie;
-	(case c of
-		None => setCookie cartCookie (Cons (id, Nil)); cart ()
-	  | Some x => setCookie cartCookie (Cons (id, x)); cart ())
+					, BodyStart = 
+					fn title => <xml><h1>{[title]}</h1></xml>
+					, BodyEnd =
+					fn () => <xml><p>This is a footer</p></xml>}
 
 open Product.Make(struct
                  val tab = product
@@ -84,14 +72,16 @@ open Product.Make(struct
 
 				 val display_container = display_container
 
-				 val cartAdd = buy
+				 val formatting = formatting
+
+				 val cartCookie = cartCookie
              end) 
 
 fun categoryList (catId : int) = 
 	cl <- queryX' (SELECT * FROM productCategory WHERE productCategory.CategoryId = {[catId]})
 		(fn r => <xml>{displayProd r.ProductCategory.ProductId}</xml>);
 	catDet <- oneRow (SELECT * FROM category WHERE Category.Id = {[catId]});
-	return <xml>{mkHead catDet.Category.Title}
+	return <xml>{formatting.Head catDet.Category.Title}
 				<body><h1>{[catDet.Category.Title]}</h1>
 					<p>{[catDet.Category.Description]}</p>
 					{cl}
@@ -99,5 +89,5 @@ fun categoryList (catId : int) =
 			</xml>
 
 fun main () =
-	return <xml>{mkHead "UrShop"}<body><h1>UrShop</h1><a link={categoryList 1}>Display Product</a></body></xml>
+	return <xml>{formatting.Head "UrShop"}<body><h1>UrShop</h1><a link={categoryList 1}>Display Product</a></body></xml>
 
