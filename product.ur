@@ -105,11 +105,12 @@ functor Make(M : sig
 
 	and cart () = 
 		c <- getCookie cartCookie;
-		(case c of None => return <xml><body>Your cart is empty</body></xml>
-	              | Some items => dp <- displayProd 1;
-				  	return <xml><body>
+		(case c of None => return <xml>{formatting.Head "Cart"}<body>{formatting.BodyStart "Cart"}<p>Your cart is empty</p>{formatting.BodyEnd ()}</body></xml>
+	              | Some items =>
+				  	dp <- List.mapXM displayProd items;
+				  	return <xml>{formatting.Head "Cart"}<body>{formatting.BodyStart "Cart"}
 						{dp}
-						</body>
+						{formatting.BodyEnd ()}</body>
 					</xml>	
 		)
 
