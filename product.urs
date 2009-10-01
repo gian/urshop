@@ -24,7 +24,7 @@ functor Make(M : sig
 
 				 val display_container : css_class
              end) : sig
-    val displayProd : int -> transaction xbody 
+    val displayProd : int -> bool -> transaction xbody 
     val displayProds : unit -> transaction page
     val cart : unit -> transaction page
 	val cartAdd : int -> transaction page

@@ -35,6 +35,7 @@ style display_price
 style display_stock
 style display_nostock
 style display_attr
+style cart_remove
 
 con colMeta = fn t :: Type =>
                  {Nam : string,
@@ -89,7 +90,8 @@ functor Make(M : sig
  	    </xml>);
 	 return <xml><body>{rows}</body></xml>
 
-	fun displayProd (id : int) =
+	fun displayProd (id : int) (showCartLink : bool) =
+	 cl <- (if showCartLink then return <xml><a link={cartAdd id}>Add to Cart</a></xml> else return <xml/>);
 	 rows <- queryX (SELECT * FROM tab AS T WHERE T.Id = {[id]})
 	    (fn (fs : {T : $([Id = int] ++ M.cols)}) => <xml>
 		<div class={M.display_container}>{foldRX2 [id] [colMeta] [body]
@@ -98,7 +100,7 @@ functor Make(M : sig
                                                {col.Show v}
                                              </xml>)
                       [M.cols] M.fl (fs.T -- #Id) M.cols}
- 	    <a link={cartAdd id}>Add to Cart</a></div></xml>);
+ 	    {cl}</div></xml>);
 	return <xml>{rows}</xml>
 
 	(* return <xml>{displayProd i}</xml>) items); *)
@@ -107,7 +109,7 @@ functor Make(M : sig
 		c <- getCookie cartCookie;
 		(case c of None => return <xml>{formatting.Head "Cart"}<body>{formatting.BodyStart "Cart"}<p>Your cart is empty</p>{formatting.BodyEnd ()}</body></xml>
 	              | Some items =>
-				  	dp <- List.mapXM displayProd items;
+				  	dp <- List.mapXM (fn x => dp <- displayProd x False; return <xml>{dp}<a link={cartRemove x} class={cart_remove}>[Remove from Cart]</a></xml>) items;
 				  	return <xml>{formatting.Head "Cart"}<body>{formatting.BodyStart "Cart"}
 						{dp}
 						{formatting.BodyEnd ()}</body>
@@ -119,5 +121,11 @@ functor Make(M : sig
 		(case c of
 			None => setCookie cartCookie (Cons (id, Nil)); cart ()
 		  | Some x => if (List.exists (fn y => y = id) x) then cart() else setCookie cartCookie (Cons (id, x)); cart ())
+	
+	and cartRemove (id : int) =
+		c <- getCookie cartCookie;
+		(case c of
+			None => cart ()
+		  | Some x => setCookie cartCookie (List.filter (fn y => y <> id) x); cart ())
 
 end

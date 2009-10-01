@@ -79,7 +79,7 @@ open Product.Make(struct
 
 fun categoryList (catId : int) = 
 	cl <- queryX' (SELECT * FROM productCategory WHERE productCategory.CategoryId = {[catId]})
-		(fn r => <xml>{displayProd r.ProductCategory.ProductId}</xml>);
+		(fn r => <xml>{displayProd r.ProductCategory.ProductId True}</xml>);
 	catDet <- oneRow (SELECT * FROM category WHERE Category.Id = {[catId]});
 	return <xml>{formatting.Head catDet.Category.Title}
 				<body><h1>{[catDet.Category.Title]}</h1>
