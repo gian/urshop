@@ -57,58 +57,8 @@ body {
 	float: right;
 }
 
- .Urblog_blogentryauthor {
-	float: left;
+p.Product_cart_remove {
+	text-align: center;
 }
 
-.Urblog_commentform {
-
-}
-
-.Urblog_commentbutton {
-	color:black; 
-	font: bold 9px arial,helvetica,clean,sans-serif;	
-	background-color:white; 
-	border:1px solid; 
-	border-color: #696 #363 #363 #696; 
-} 
-
-.Urblog_accountlinks {
-	top: 5px;
-	right: 10px;
-	position: absolute;
-	float: right;
-}
-
-.Urblog_bodyedit {
-	width: 630px;
-	height: 250px;
-}
-
-.Urblog_commentbox {
-	width: 430px;
-	height: 150px;
-}
-
-.Editor_editordefault {
-	width: 330px;
-}
-
-.Urblog_loginbox {
-	position: absolute;
-	float: right;
-	right: 10px;
-	top: 35px;
-	padding: 24px;
-	background-color: white;
-	border-color: black;
-	border-width: 1px;
-	border-style: solid;
-	font-size: 10px;
-}
-
-.Urblog_loginbox input {
-	 font-family: 9px  Arial, Helvetica, clean, sans-serif;
-	 width: 100px;
-}
 
